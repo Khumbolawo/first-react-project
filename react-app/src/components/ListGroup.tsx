@@ -1,15 +1,37 @@
 //creating listgroup component as function
+//uses items.map to list cities dynamically from a variable items
+
+import { useState } from "react";
+
+//using conditionals in parantheses lets you display content dynamically
 function ListGroup() {
+  let items = ["New York", "Los Angeles", "Chicago", "Houston", "Philadelphia"];
+  //below is a hook. function that allows us to tap into react state
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   return (
-    <ul className="list-group">
-      <li className="list-group-item">An item</li>
-      <li className="list-group-item">A second item</li>
-      <li className="list-group-item">A third item</li>
-      <li className="list-group-item">A fourth item</li>
-      <li className="list-group-item">And a fifth one</li>
-    </ul>
+    <>
+      <h1>List of Cities</h1>
+      {items.length === 0 && <p>No cities to display</p>}
+      <ul className="list-group">
+        {items.map((item, index) => (
+          <li
+            className={
+              selectedIndex === index
+                ? "list-group-item active"
+                : "list-group-item"
+            }
+            key={item}
+            //below is a function that lets us highlight selected items in list
+            onClick={() => {
+              setSelectedIndex(index);
+            }}
+          >
+            {item}
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
-
 //exporting function to be accessed by rest of app
 export default ListGroup;
